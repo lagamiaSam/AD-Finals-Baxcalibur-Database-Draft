@@ -56,7 +56,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
                     <li><a href="" title="View About Information">About</a></li>
                     <li>
                         <!-- Log In Button Link-->
-                        <a id="loginBtnLink" href="../login-page/login-page.html" title="Login to Your Account">Log
+                        <a id="loginBtnLink" href="../pages/loginPage/index.php" title="Login to Your Account">Log
                             In</a>
                     </li>
                     <li>
