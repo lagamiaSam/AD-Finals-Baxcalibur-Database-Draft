@@ -19,7 +19,7 @@ $dbname = $databases['pgDB'];
 // ——— Connect to PostgreSQL ———
 $dsn = "pgsql:host={$databases['pgHost']};port={$port};dbname={$dbname}";
 $pdo = new PDO($dsn, $username, $password, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 ]);
 
 // Just indicator it was working
@@ -31,7 +31,7 @@ $sql = file_get_contents('database/users.model.sql');
 if ($sql === false) {
   throw new RuntimeException("Could not read database/users.model.sql");
 } else {
-    echo "Creation Success from the database/users.model.sql";
+  echo "Creation Success from the database/users.model.sql";
 }
 
 // If your model.sql contains a working command it will be executed

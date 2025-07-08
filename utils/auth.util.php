@@ -28,7 +28,7 @@ class Auth
     public static function login(PDO $pdo, string $username, string $password): bool
     {
         try {
-            // 1) Fetch the user record
+            // 1) Fetch the user record MAY TINANGGALL******!!!!!!!
             $stmt = $pdo->prepare("
                 SELECT
                 u.id,
@@ -36,11 +36,8 @@ class Auth
                 u.last_name,
                 u.username,
                 u.password,
-                u.role,
-                i.filepath AS profile_image_path
+                u.role
                 FROM public.\"users\" u
-                LEFT JOIN public.images i
-                ON u.profile_image_id = i.id
                 WHERE u.username = :username
             ");
             $stmt->execute([':username' => $username]);
@@ -54,6 +51,7 @@ class Auth
 
         // Debug output: did we get a row?
         if (!$user) {
+            echo "no user";
             error_log("[Auth::login] No user found for username='{$username}'");
             return false;
         } else {

@@ -1,3 +1,6 @@
+# This tells Git which files or directories to ignore.
+# These won’t be tracked, committed, or pushed to a repository.
+
 .qodo
 .php_tmp
 vendor

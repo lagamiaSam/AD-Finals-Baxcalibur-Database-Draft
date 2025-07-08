@@ -1,13 +1,9 @@
 <?php
 declare(strict_types=1);
 
-// 1) Composer autoload
+// TODO: Ask Sir if we will add BASE_PATH on these.
 require_once 'vendor/autoload.php';
-
-// 2) Composer bootstrap
 require_once 'bootstrap.php';
-
-// 3) envSetter
 require_once UTILS_PATH . '/envSetter.util.php';
 
 $users = require_once DUMMIES_PATH . '/users.staticData.php';
@@ -21,7 +17,7 @@ $dbname = $databases['pgDB'];
 // ——— Connect to PostgreSQL ———
 $dsn = "pgsql:host={$databases['pgHost']};port={$port};dbname={$dbname}";
 $pdo = new PDO($dsn, $username, $password, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 ]);
 
 // Just indicator it was working
@@ -33,16 +29,9 @@ $sql = file_get_contents('database/users.model.sql');
 if ($sql === false) {
   throw new RuntimeException("Could not read database/users.model.sql");
 } else {
-    echo "Creation Success from the database/users.model.sql";
+  echo "Creation Success from the database/users.model.sql";
 }
 
-// If your model.sql contains a working command it will be executed
-// $pdo->exec($sql);
-
-// echo "Truncating tables…\n";
-// foreach (['users'] as $table) {
-//   $pdo->exec("TRUNCATE TABLE {$table} RESTART IDENTITY CASCADE;");
-// }
 
 // simple indicator command seeding started
 echo "Seeding users…\n";

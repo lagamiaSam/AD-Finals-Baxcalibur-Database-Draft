@@ -85,7 +85,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
             </div>
         </div>
     </section>
-    
+
     <!-- JavaScript Link -->
     <script src="./assets/js/script.js"></script>
 </body>

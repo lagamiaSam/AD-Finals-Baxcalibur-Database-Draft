@@ -23,3 +23,4 @@ if (!$dbconn) {
 }
 
 // return $postgresqlCheckerResult;
+?>

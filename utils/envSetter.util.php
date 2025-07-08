@@ -3,12 +3,12 @@
 require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 
-/**
- * Load environment variables from .env file
- *
- * This function initializes the Dotenv library to load environment variables
- * from a .env file located at the base path of the application. It sets up
- */
+// This code prepares environment-based database settings (for PostgreSQL and MongoDB)
+// so the application can securely connect to them without hardcoding credentials.
+
+// It loads environment variables from a .env file using the vlucas/phpdotenv library
+// and stores them in a $databases array for later use
+// (e.g., for connecting to PostgreSQL and MongoDB).
 
 $dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
 $dotenv->load();

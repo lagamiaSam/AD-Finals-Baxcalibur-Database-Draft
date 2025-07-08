@@ -2,12 +2,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Orbitron";
 }
 
 body {
   background-color: black;
 }
 
+/* Nav Bar */
 nav {
   display: flex;
   justify-content: space-between;
@@ -15,8 +17,7 @@ nav {
   min-height: 3.5rem;
   height: 3.5rem;
   padding-left: 2rem;
-  padding-right: 1.5rem;
-  font-family: "Orbitron";
+  padding: 0 1.5rem 0 2rem;
   font-weight: bold;
   position: fixed;
   top: 0;
@@ -38,37 +39,6 @@ nav {
 
 .brand-name {
   font-size: 1.5rem;
-}
-
-.toggle-menu {
-  display: none;
-  margin-left: auto;
-}
-
-.toggle-menu-btn {
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  cursor: pointer;
-}
-
-.material-icons {
-  color: white;
-  border-radius: 5px;
-  padding: 0.25rem;
-  margin-right: 0.25rem;
-  transition: all 0.3s;
-}
-
-.material-icons:hover {
-  background-color: white;
-  color: black;
-  border-radius: 5px;
-  padding: 0.5rem;
-  margin-right: 0;
-}
-
-.material-icons:active {
-  transform: scale(0.75);
 }
 
 .navbar-links {
@@ -146,22 +116,50 @@ nav li:has(#signUpBtnLink) {
   transform: scale(0.9);
 }
 
-.hero-section {
-  padding: 2rem 5.75rem;
-  font-family: "Orbitron";
+.toggle-menu {
+  display: none;
+  margin-left: auto;
 }
 
+.toggle-menu-btn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+}
+
+.material-icons {
+  color: white;
+  border-radius: 5px;
+  padding: 0.25rem;
+  margin-right: 0.25rem;
+  transition: all 0.3s;
+}
+
+.material-icons:hover {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-right: 0;
+}
+
+.material-icons:active {
+  transform: scale(0.75);
+}
+
+/* Hero Section */
 #heroSection {
   height: 100vh;
   background-size: cover;
   background-position: center;
   transition: background-image 1s ease-in-out;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem 5.75rem;
   color: white;
   text-align: center;
-  position: relative;
 }
 
 #heroSection::before {
@@ -228,11 +226,10 @@ nav li:has(#signUpBtnLink) {
   transform: scale(1.1);
 }
 
-
-
 footer {
   height: 250px;
 }
+
 @media (max-width: 900px) {
   .navbar-links {
     position: fixed;
@@ -249,10 +246,6 @@ footer {
 
   .navbar-links.active {
     right: 0;
-  }
-
-  .toggle-menu {
-    display: flex;
   }
 
   .navbar-links li {
@@ -286,5 +279,9 @@ footer {
   #signUpBtnLink {
     margin-bottom: 1rem;
     color: black;
+  }
+
+  .toggle-menu {
+    display: flex;
   }
 }

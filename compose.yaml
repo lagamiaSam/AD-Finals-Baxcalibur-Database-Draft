@@ -1,3 +1,10 @@
+# This defines and configures multi-container Docker applications.
+
+# - Specifies services (like web servers, databases), their images, ports, volumes,
+# and how they interact.
+
+# Allows us to start everything with a single docker compose up command.
+
 services:
   ad-finals-baxcalibur-database-draft:
     build:
@@ -21,6 +28,7 @@ services:
     image: mongo:latest
     container_name: ad-finals-baxcalibur-database-draft-mongodb
     environment:
+    # TODO: Change the MongoDB Username and Password
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootPassword
       MONGO_INITDB_DATABASE: baxcaliburDbDraft
@@ -34,6 +42,7 @@ services:
     container_name: ad-finals-baxcalibur-database-draft-postgresql
     restart: always
     environment:
+        # TODO: Change the PostgresDB Username and Password
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: baxcaliburDbDraft

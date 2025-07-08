@@ -5,14 +5,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/zyx-0314/">
-  <!-- TODO: If you want to add logo or banner you can add it here -->
-    <img src="./assets/img/nyebe_white.png" alt="Nyebe" width="130" height="100">
+    <img src="./assets/img/baxcalibur-logo.png" alt="Nyebe" width="130" height="100">
   </a>
-<!-- TODO: Change Title to the name of the title of your Project -->
-  <h3 align="center">Title</h3>
+  <h3 align="center">Baxcalibur</h3>
+  <h4 align="center">Travel the World in Glitch Mode</h4>
 </div>
-<!-- TODO: Make a short description -->
 <div align="center">
+<!-- TODO: Add a Short Description about the project.  -->
   Short Description. (Optional)
 </div>
 
@@ -23,6 +22,8 @@
 
 ![](https://visit-counter.vercel.app/counter.png?page=zyx-0314/AD-CI4-Template-Project)
 
+
+<!-- TODO: Change this WakaTime Badge with yours. -->
 [![wakatime](https://wakatime.com/badge/user/018dd99a-4985-4f98-8216-6ca6fe2ce0f8/project/63501637-9a31-42f0-960d-4d0ab47977f8.svg)](https://wakatime.com/badge/user/018dd99a-4985-4f98-8216-6ca6fe2ce0f8/project/63501637-9a31-42f0-960d-4d0ab47977f8)
 
 ---
@@ -81,12 +82,11 @@ Description of the project in details.
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 
 #### Framework/Library
+<!-- TODO: Ask Sir About CodeIgniter -->
 ![CodeIgniter](https://img.shields.io/badge/CodeIgniter-EF4223?style=for-the-badge&logo=codeigniter&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 #### Databases
-![MySQL](https://img.shields.io/badge/MySQL-00758F?style=for-the-badge&logo=mysql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 
@@ -95,17 +95,16 @@ Description of the project in details.
 
 ## Rules, Practices and Principles
 
-<!-- Do not Change this -->
-
 1. Always use `AD-` in the front of the Title of the Project for the Subject followed by your custom naming.
 2. Do not rename `.php` files if they are pages; always use `index.php` as the filename.
 3. Add `.component` to the `.php` files if they are components code; example: `footer.component.php`.
 4. Add `.util` to the `.php` files if they are utility codes; example: `account.util.php`.
 5. Place Files in their respective folders.
+<!-- TODO: Ask about the naming convention -->
 6. Different file naming Cases
    | Naming Case | Type of code         | Example                           |
    | ----------- | -------------------- | --------------------------------- |
-   | Pascal      | Utility              | Accoun.util.php                   |
+   | Pascal      | Utility              | Account.util.php                   |
    | Camel       | Components and Pages | index.php or footer.component.php |
 8. Renaming of Pages folder names are a must, and relates to what it is doing or data it holding.
 9. Use proper label in your github commits: `feat`, `fix`, `refactor` and `docs`
@@ -155,7 +154,7 @@ AD-ProjectName
 
 ## Resources
 
-<!-- TODO: Add References -->
+<!-- TODO: Add our References here. -->
 
 | Title        | Purpose                                                                       | Link          |
 | ------------ | ----------------------------------------------------------------------------- | ------------- |

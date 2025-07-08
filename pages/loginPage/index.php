@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
+require_once HANDLERS_PATH . '/mongodbChecker.handler.php';
+require_once HANDLERS_PATH . '/postgreChecker.handler.php';
+
+
 Auth::init();
+Auth::logout();
 
 if (Auth::check()) {
     header('Location: /index.php');
@@ -11,7 +16,7 @@ if (Auth::check()) {
 }
 
 // call the layout you want to use from layout folder
-// require_once LAYOUTS_PATH . "/main.layout.php";
+require_once LAYOUTS_PATH . "/main.layout.php";
 
 $error = trim((string) ($_GET['error'] ?? ''));
 $error = str_replace("%", " ", $error);
@@ -19,12 +24,12 @@ $error = str_replace("%", " ", $error);
 $message = trim((string) ($_GET['message'] ?? ''));
 $message = str_replace("%", " ", $message);
 
-$title = "Login Page";
+
 
 // functions that will render the layout of your choosing
-// renderMainLayout(
-//     function () use ($error, $message) {
-//         ?>
+renderMainLayout(
+    function () use ($error, $message) {
+         ?>
     <div class="form-container">
         <div class="login-container">
             <form action="/handlers/auth.handlers.php" method="POST">
@@ -58,11 +63,11 @@ $title = "Login Page";
         </div>
     </div>
     <?php
-//     },
-//     $title,
-//     [
-//         "css" => [
-//             "./assets/css/login.css"
-//         ],
-//     ]
-// );
+    },
+    //  $title,
+    //  [
+    //      "css" => [
+    //          "./assets/css/login.css"
+    //     ],
+    //  ]
+);

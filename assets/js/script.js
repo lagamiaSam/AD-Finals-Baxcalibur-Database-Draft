@@ -1,3 +1,4 @@
+// Toggles Menu Icon Button
 function toggleMenu() {
   const navbarLinks = document.getElementById("navbarLinks");
   const toggleMenuBtn = document.getElementById("toggleMenuBtn");
@@ -14,6 +15,7 @@ function toggleMenu() {
   }
 }
 
+// Changes Hero Section Background Image
 const heroSection = document.getElementById("heroSection");
 
 const images = [
@@ -29,8 +31,6 @@ function changeBackground() {
   heroSection.style.backgroundImage = images[current];
 }
 
-// Initial background
 heroSection.style.backgroundImage = images[0];
 
-// Change every 5 seconds
 setInterval(changeBackground, 4000);
