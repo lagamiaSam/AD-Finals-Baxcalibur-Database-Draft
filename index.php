@@ -61,7 +61,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
                     </li>
                     <li>
                         <!-- Sign Up Button Link -->
-                        <a id="signUpBtnLink" href="" title="Create New Account">Sign Up</a>
+                        <a id="signUpBtnLink" href="./pages/signupPage/index.php" title="Create New Account">Sign Up</a>
                     </li>
                 </ul>
             </div>
