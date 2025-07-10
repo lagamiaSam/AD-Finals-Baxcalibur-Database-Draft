@@ -11,7 +11,7 @@ services:
       context: .
     container_name: ad-finals-baxcalibur-database-draft-service
     ports:
-      - "8000:8000"
+      - "8001:8000"
     develop:
       watch:
         - path: .
