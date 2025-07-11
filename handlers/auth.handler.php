@@ -5,8 +5,6 @@ require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 
-
-
 // Initialize session
 Auth::init();
 
@@ -31,8 +29,11 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (Auth::login($pdo, $usernameInput, $passwordInput)) {
         $user = Auth::user();
-
+//AYUSIN
         if ($user["role"] == "team lead") {
+            header('Location: /pages/userDashboardPage/index.php');
+        } 
+        elseif ($user["role"] == "user") {
             header('Location: /pages/userDashboardPage/index.php');
         } else {
             header('Location: /index.php');
