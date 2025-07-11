@@ -6,7 +6,7 @@ require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 
 // Initialize session
-Auth::init();
+Auth::init(); 
 
 $host = $databases['pgHost'];
 $port = $databases['pgPort'];
