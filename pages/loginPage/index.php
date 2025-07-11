@@ -25,7 +25,7 @@ $message = str_replace("%", " ", $message);
 renderMainLayout(
     function () use ($error, $message) {
          ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
