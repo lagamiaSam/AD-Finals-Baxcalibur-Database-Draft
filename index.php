@@ -54,6 +54,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
                     </li>
                     <li><a href="" title="View Services">Services</a></li>
                     <li><a href="" title="View About Information">About</a></li>
+                    <li><a href="/pages/userDashboardPage/index.php" title="View User Dashboard">User Dashboard</a></li>
                     <li>
                         <!-- Log In Button Link-->
                         <a id="loginBtnLink" href="../pages/loginPage/index.php" title="Login to Your Account">Log
