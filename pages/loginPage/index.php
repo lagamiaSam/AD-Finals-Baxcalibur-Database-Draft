@@ -5,7 +5,7 @@ require_once UTILS_PATH . '/auth.util.php';
 require_once HANDLERS_PATH . '/postgreChecker.handler.php';
 require_once LAYOUTS_PATH . "/main.layout.php";
 Auth::init();
-// Auth::logout(); comment lng uli saglit
+
 if (Auth::check()) {
     header('Location: /index.php');
     exit;
