@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-image: url(./img/login-page-background-image.jpg);
+  background-image: url(./../img/login-page-background-image.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
