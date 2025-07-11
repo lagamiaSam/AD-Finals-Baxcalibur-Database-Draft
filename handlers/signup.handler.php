@@ -1,9 +1,11 @@
-<?php
+<?php 
 declare(strict_types=1);
 require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
+require_once UTILS_PATH . '/signup.util.php'; // Include your Signup class
+
 // Initialize session
 Auth::init();
 
@@ -21,36 +23,39 @@ $pdo = new PDO($dsn, $username, $password, [
 
 $action = $_REQUEST['action'] ?? null;
 
-// --- LOGIN ---
-if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usernameInput = trim($_POST['username'] ?? '');
-    $passwordInput = trim($_POST['password'] ?? '');
-    
-    if (Auth::login($pdo, $usernameInput, $passwordInput)) {
-        $user = Auth::user();
+// --- SIGNUP ---
+if ($action === 'signup' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $formData = [
+        'first_name' => $_POST['first_name'] ?? '',
+        'middle_name' => $_POST['middle_name'] ?? '',
+        'last_name' => $_POST['last_name'] ?? '',
+        'username' => $_POST['username'] ?? '',
+        'password' => $_POST['password'] ?? '',
+        'role' => $_POST['role'] ?? '',
+    ];
 
-        if ($user["role"] == "team lead") {
-            header('Location: /pages/userDashboardPage/index.php');
-        } else {
-            header('Location: /index.php');
-        }
+    $errors = Signup::validate($formData);
+
+    if (!empty($errors)) {
+        // Redirect back to signup with error messages (can be improved with session flash or query params)
+        $errorString = urlencode(implode(', ', $errors));
+        header("Location: /pages/signupPage/index.php?error={$errorString}");
         exit;
-    } else {
-        header('Location: /pages/loginPage/index.php?error=Invalid%Credentials');
+    }
+
+    try {
+        Signup::create($pdo, $formData);
+        header('Location: /pages/loginPage/index.php?message=Account%20created%20successfully');
+        exit;
+    } catch (PDOException $e) {
+        // Handle duplicate username or DB errors
+        error_log('[Signup Handler] PDOException: ' . $e->getMessage());
+        header("Location: /pages/signupPage/index.php?error=Something%20went%20wrong%20while%20creating%20account");
         exit;
     }
 }
 
-// --- LOGOUT ---
-elseif ($action === 'logout') {
-    Auth::init();
-    Auth::logout();
-    header('Location: /pages/loginPage/index.php');
-    exit;
-}
-
-// If no valid action, redirect to login
-header('Location: /pages/loginPage/index.php');
+// If no valid action, redirect to signup
+header('Location: /pages/signupPage/index.php');
 exit;
-
 ?>
