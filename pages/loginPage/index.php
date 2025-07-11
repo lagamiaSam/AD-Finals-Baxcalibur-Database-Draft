@@ -41,7 +41,7 @@ renderMainLayout(
     />
     
   <link rel="stylesheet" href="./assets/css/style.css" />
-</head>
+</head> 
 <body>
         <div class="form-container">
         <div class="login-container">
