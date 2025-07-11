@@ -8,7 +8,7 @@ class Signup
     /**
      * Validate the raw input; returns an array of error messages (empty if valid)
      *
-     * @param array $data  Expecting keys: first_name, middle_name, last_name, username, password, role
+     * @param array $data  Expecting keys: first_name, middle_name, last_name, username, password, confirm_password, role
      * @return string[]    List of validation errors
      */
     public static function validate(array $data): array
@@ -20,6 +20,7 @@ class Signup
         $last_name = trim($data['last_name'] ?? '');
         $username = trim($data['username'] ?? '');
         $password = $data['password'] ?? '';
+        $confirm_password = $data['confirm_password'] ?? '';
         $role = trim($data['role'] ?? '');
 
         // 1) Required fields
@@ -33,10 +34,10 @@ class Signup
             $errors[] = 'Username is required.';
         }
 
-        // 2) Role must be valid
-        $validRoles = ['admin', 'user'];
+        // 2) Role must be valid — only 'user' allowed now
+        $validRoles = ['user'];
         if (!in_array($role, $validRoles, true)) {
-            $errors[] = 'Role must be “Admin” or “User”.';
+            $errors[] = 'Role must be “User”.';
         }
 
         // 3) Password policy
@@ -49,6 +50,11 @@ class Signup
             || !preg_match('/\W/', $password)
         ) {
             $errors[] = 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.';
+        }
+
+        // 4) Confirm password match
+        if ($password !== $confirm_password) {
+            $errors[] = 'Password and confirm password do not match.';
         }
 
         return $errors;
