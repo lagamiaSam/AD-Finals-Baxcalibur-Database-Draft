@@ -48,12 +48,11 @@ class Auth
             error_log('[Auth::login] PDOException: ' . $e->getMessage());
             return false;
         }
-
         // Debug output: did we get a row?
         if (!$user) {
-            echo "no user";
-            error_log("[Auth::login] No user found for username='{$username}'");
-            return false;
+            // echo "no user";
+    error_log("[Auth::login] No user found for username='{$username}'");
+    return false;//BINAGO SAGLIT
         } else {
             error_log('[Auth::login] Retrieved user: ' . var_export([
                 'id' => $user['id'],
@@ -61,7 +60,6 @@ class Auth
                 'role' => $user['role'],
             ], true));
         }
-
         // 2) Verify password
         if (!password_verify($password, $user['password'])) {
             error_log("[Auth::login] Password mismatch for user_id={$user['id']}");
@@ -82,7 +80,6 @@ class Auth
 
         return true;
     }
-
     /**
      * Returns the currently logged-in user, or null if not logged in
      * 

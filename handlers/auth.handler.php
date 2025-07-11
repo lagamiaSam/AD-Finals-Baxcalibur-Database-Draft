@@ -30,7 +30,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (Auth::login($pdo, $usernameInput, $passwordInput)) {
         $user = Auth::user();
 //AYUSIN
-        if ($user["role"] == "team lead") {
+        if ($user["role"] == "admin") {
             header('Location: /pages/userDashboardPage/index.php');
         } 
         elseif ($user["role"] == "user") {
