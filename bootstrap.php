@@ -18,4 +18,4 @@ define('UTILS_PATH', realpath(BASE_PATH . "/utils"));
 define('STATIC_DATAS_PATH', realpath(BASE_PATH . '/staticDatas'));
 define('DUMMIES_PATH', realpath(BASE_PATH . "/staticDatas/dummies"));
 
-chdir(BASE_PATH);
+chdir(BASE_PATH); 
