@@ -31,7 +31,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = Auth::user();
 //AYUSIN
         if ($user["role"] == "admin") {
-            header('Location: /pages/userDashboardPage/index.php');
+            header('Location: /pages/adminDashboardPage/index.php');
         } 
         elseif ($user["role"] == "user") {
             header('Location: /pages/userDashboardPage/index.php');

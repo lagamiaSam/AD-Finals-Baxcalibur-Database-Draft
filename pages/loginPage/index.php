@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once HANDLERS_PATH . '/postgreChecker.handler.php';
+require_once LAYOUTS_PATH . "/main.layout.php";
 Auth::init();
 // Auth::logout(); comment lng uli saglit
 if (Auth::check()) {
@@ -10,20 +11,20 @@ if (Auth::check()) {
     exit;
 }
 // call the layout you want to use from layout folder
-require_once LAYOUTS_PATH . "/main.layout.php";
-//cinomment lng saglit
-// $error = trim((string) ($_GET['error'] ?? ''));
-// $error = str_replace("%", " ", $error);
 
-// $message = trim((string) ($_GET['message'] ?? ''));
-// $message = str_replace("%", " ", $message);
+// cinomment lng saglit
+$error = trim((string) ($_GET['error'] ?? ''));
+$error = str_replace("%", " ", $error);
+
+$message = trim((string) ($_GET['message'] ?? ''));
+$message = str_replace("%", " ", $message);
 
 
 
 // functions that will render the layout of your choosing
-// renderMainLayout(
-//     function () use ($error, $message) {
-//          ?>
+renderMainLayout(
+    function () use ($error, $message) {
+         ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +45,7 @@ require_once LAYOUTS_PATH . "/main.layout.php";
 <body>
         <div class="form-container">
         <div class="login-container">
- <form action="/handlers/auth.handlers.php" method="POST">
+ <form action="/handlers/auth.handler.php" method="POST">
       <h2>Welcome Back!</h2>
       <?php if (!empty($message)): ?>
                     <div class="mb-4 text-green-600">
@@ -73,5 +74,5 @@ require_once LAYOUTS_PATH . "/main.layout.php";
   <script src="script.js"></script>
 </body>
 </html>
-
- 
+<?php
+                      });

@@ -4,9 +4,6 @@ require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
-
-
-
 // Initialize session
 Auth::init();
 
