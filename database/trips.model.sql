@@ -1,3 +1,4 @@
+-- Click Run to execute SQL command
 CREATE TABLE IF NOT EXISTS public."trips" (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     destination VARCHAR(100) NOT NULL,
@@ -8,6 +9,10 @@ CREATE TABLE IF NOT EXISTS public."trips" (
     price NUMERIC(10, 2) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+
+
+
 
 -- Complete SQL Code
 

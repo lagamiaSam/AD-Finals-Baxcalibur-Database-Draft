@@ -1,5 +1,10 @@
+-- Uncomment this when creating and setting up the database
+-- Then recomment it afterwards
+
 -- CREATE TYPE user_role AS ENUM ('admin', 'user');
 
+
+-- Click Run to execute SQL command
 CREATE TABLE IF NOT EXISTS public."users" (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     first_name VARCHAR(100) NOT NULL,
@@ -10,8 +15,12 @@ CREATE TABLE IF NOT EXISTS public."users" (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+
+
+
+
 -- Complete SQL Code
- 
+
 -- CREATE TYPE user_role AS ENUM ('admin', 'user');
 
 -- CREATE TABLE IF NOT EXISTS public."users" (
