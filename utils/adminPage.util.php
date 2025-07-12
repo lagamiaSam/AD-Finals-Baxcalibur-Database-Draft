@@ -13,20 +13,21 @@ class AdminPage
     {
         try {
             $stmt = $pdo->query("
-                SELECT first_name, middle_name, last_name, password
+                SELECT id, username, first_name, last_name, password, role
                 FROM public.\"users\"
                 ORDER BY last_name ASC
             ");
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $users = [];
 
             foreach ($rows as $row) {
-                $fullName = trim($row['first_name'] . ' ' . ($row['middle_name'] ?? '') . ' ' . $row['last_name']);
+                $fullName = trim($row['first_name'] . ' ' . $row['last_name']);
 
                 $users[] = [
+                    'id' => $row['id'],
+                    'username' => $row['username'],
                     'name' => $fullName,
-                    'password' => $row['password'], // ⚠️ For demo only. Never show this in production.
                     'booked' => 'N/A',
                     'payment' => 'N/A'
                 ];

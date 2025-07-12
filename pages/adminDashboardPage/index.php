@@ -65,8 +65,9 @@ $users = AdminPage::displayUsers($pdo);
             <table class="admin-table">
               <thead>
                 <tr>
+                  <th>ID</th>
+                  <th>Username</th>
                   <th>Name</th>
-                  <th>Password</th>
                   <th>Booked</th>
                   <th>Payment</th>
                 </tr>
@@ -75,8 +76,9 @@ $users = AdminPage::displayUsers($pdo);
                 <?php if ($users && count($users) > 0): ?>
                   <?php foreach ($users as $user): ?>
                     <tr>
+                      <td><?= htmlspecialchars($user['id']) ?></td>
+                      <td><?= htmlspecialchars($user['username']) ?></td>
                       <td><?= htmlspecialchars($user['name']) ?></td>
-                      <td><?= htmlspecialchars($user['password']) ?></td> <!-- ⚠️ Remove in production -->
                       <td><?= htmlspecialchars($user['booked'] ?? 'N/A') ?></td>
                       <td><?= htmlspecialchars($user['payment'] ?? 'N/A') ?></td>
                     </tr>
