@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS public."trips" (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id SERIAL PRIMARY KEY,
     destination VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
     booking_date DATE NOT NULL,
