@@ -7,6 +7,7 @@ require_once UTILS_PATH . '/envSetter.util.php';
 
 // Load static data
 $admins = require STATIC_DATAS_PATH . '/admins.staticData.php';
+$trips = require STATIC_DATAS_PATH . '/trips.staticData.php';
 
 // Create PDO connection
 function connectToDatabase(array $config): PDO {
@@ -67,6 +68,31 @@ function seedAdmins(PDO $pdo, array $admins): void {
     }
 }
 
+function seedTrips(PDO $pdo, array $trips): void {
+    echo "\n🌱 Seeding Trips…\n";
+
+    $stmt = $pdo->prepare("
+        INSERT INTO trips (destination, description, booking_date, start_time, end_time, price)
+        VALUES (:destination, :description, :booking_date, :start_time, :end_time, :price)
+    ");
+
+    foreach ($trips as $trip) {
+        try {
+            $stmt->execute([
+                ':destination' => $trip['destination'],
+                ':description' => $trip['description'],
+                ':booking_date' => $trip['booking_date'],
+                ':start_time' => $trip['start_time'],
+                ':end_time' => $trip['end_time'],
+                ':price' => $trip['price'],
+            ]);
+            echo "✅ Inserted trip: {$trip['destination']}\n";
+        } catch (PDOException $e) {
+            echo "❌ Failed to insert trip {$trip['destination']}: " . $e->getMessage() . "\n";
+        }
+    }
+}
+
 // Main execution
 $pdo = connectToDatabase($databases);
 
@@ -78,5 +104,6 @@ applyModels($pdo, [
 ]);
 
 seedAdmins($pdo, $admins);
+seedTrips($pdo, $trips);
 
 echo "\n🏁 Database Seeding complete.\n";
