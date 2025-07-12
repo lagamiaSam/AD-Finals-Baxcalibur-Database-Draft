@@ -31,7 +31,8 @@ if ($action === 'signup' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'last_name' => $_POST['last_name'] ?? '',
         'username' => $_POST['username'] ?? '',
         'password' => $_POST['password'] ?? '',
-        'role' => $_POST['role'] ?? '',
+        'confirm_password' => $_POST['confirm_password'] ?? '',
+        'role' => 'user',  // force user role
     ];
 
     $errors = Signup::validate($formData);
@@ -45,7 +46,8 @@ if ($action === 'signup' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         Signup::create($pdo, $formData);
-        header('Location: /pages/loginPage/index.php?message=Account%20created%20successfully');
+        // Updated redirect with urlencode:
+        header('Location: /pages/signupPage/index.php?message=' . urlencode('Account created successfully'));
         exit;
     } catch (PDOException $e) {
         // Handle duplicate username or DB errors
