@@ -1,11 +1,28 @@
 <?php
 require_once '../../bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
+require_once UTILS_PATH . '/envSetter.util.php';
+require_once UTILS_PATH . '/adminPage.util.php';
+require_once UTILS_PATH . '/auth.util.php';
+
+// Optional: Check if logged-in user is admin
+Auth::init();
+if (!Auth::check() || Auth::user()['role'] !== 'admin') {
+    header('Location: /pages/loginPage/index.php');
+    exit;
+}
+
+// Connect to PostgreSQL
+$dsn = "pgsql:host={$databases['pgHost']};port={$databases['pgPort']};dbname={$databases['pgDB']}";
+$pdo = new PDO($dsn, $databases['pgUser'], $databases['pgPassword'], [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+]);
+
+$users = AdminPage::displayUsers($pdo);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,8 +34,8 @@ require_once BASE_PATH . '/vendor/autoload.php';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Fontawesome CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Global CSS -->
   <link rel="stylesheet" href="/assets/css/style.css" />
@@ -55,12 +72,20 @@ require_once BASE_PATH . '/vendor/autoload.php';
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Kent Valencia</td>
-                  <td>••••••••</td>
-                  <td>VANTAC-X</td>
-                  <td>Card</td>
-                </tr>
+                <?php if ($users && count($users) > 0): ?>
+                  <?php foreach ($users as $user): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($user['name']) ?></td>
+                      <td><?= htmlspecialchars($user['password']) ?></td> <!-- ⚠️ Remove in production -->
+                      <td><?= htmlspecialchars($user['booked'] ?? 'N/A') ?></td>
+                      <td><?= htmlspecialchars($user['payment'] ?? 'N/A') ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="4">No users found.</td>
+                  </tr>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>
@@ -71,7 +96,4 @@ require_once BASE_PATH . '/vendor/autoload.php';
     <?php include_once BASE_PATH . '/layouts/footer.php'; ?>
   </div>
 </body>
-
-
-
 </html>
