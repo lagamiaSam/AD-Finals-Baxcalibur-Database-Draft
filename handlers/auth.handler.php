@@ -5,10 +5,8 @@ require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 
-
-
 // Initialize session
-Auth::init();
+Auth::init();   
 
 $host = $databases['pgHost'];
 $port = $databases['pgPort'];
@@ -31,14 +29,17 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (Auth::login($pdo, $usernameInput, $passwordInput)) {
         $user = Auth::user();
-
-        if ($user["role"] == "team lead") {
+//AYUSIN
+        if ($user["role"] == "admin") {
+            header('Location: /pages/adminDashboardPage/index.php');
+        } 
+        elseif ($user["role"] == "user") {
             header('Location: /pages/userDashboardPage/index.php');
         } else {
             header('Location: /index.php');
         }
         exit;
-    } else {
+    } else { 
         header('Location: /pages/loginPage/index.php?error=Invalid%Credentials');
         exit;
     }

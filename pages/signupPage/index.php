@@ -17,23 +17,23 @@
 <body>
     <img src="../../assets/img/baxcalibur-logo.png" alt="Company Logo" class="site-logo">
     <div class="container">
-        <form class="signup-form" onsubmit="return validateSignUpForm()">
+        <form class="signup-form" action="/handlers/signup.handler.php" method="POST">
               <h2>Create Account</h2>
       <div class="input-group">
         <label for="first-name">First Name</label>
-        <input type="text" id="first-name" placeholder="Enter first name" required />
+       <input id="first-name" name="first_name" placeholder="Enter first name" required />
       </div>
       <div class="input-group">
         <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" placeholder="Enter last name" required />
+        <input id="last-name" name="last_name" placeholder="Enter last name" required />
       </div>
       <div class="input-group">
         <label for="user">Username</label>
-        <input type="user" id="user" placeholder="Enter username" required />
+        <input type="text" name="username" placeholder="Enter username" required />
       </div>
       <div class="input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter password" required />
+        	<input id="password" name="password" placeholder="Enter password" required />
       </div>
       <div class="input-group">
         <label for="confirm-password">Confirm Password</label>
@@ -43,6 +43,7 @@
         <input type="checkbox" id="terms-privacy" required />
         <label for="terms-privacy">I agree to the terms and privacy policy</label>
       </div>
+      <input type="hidden" name="action" value="signup" />
       <button type="submit">Create Account</button>
       <p class="error-message" id="error-message"></p>
         </form>
