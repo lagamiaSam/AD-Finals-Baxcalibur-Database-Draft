@@ -5,86 +5,78 @@ require_once 'vendor/autoload.php';
 require_once 'bootstrap.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 
-$users = require_once DUMMIES_PATH . '/users.staticData.php';
-$bookings = require_once DUMMIES_PATH . '/bookings.staticData.php';
+// Load static data
+$admins = require STATIC_DATAS_PATH . '/admins.staticData.php';
 
-$host = $databases['pgHost'];
-$port = $databases['pgPort'];
-$username = $databases['pgUser'];
-$password = $databases['pgPassword'];
-$dbname = $databases['pgDB'];
+// Create PDO connection
+function connectToDatabase(array $config): PDO {
+    $dsn = "pgsql:host={$config['pgHost']};port={$config['pgPort']};dbname={$config['pgDB']}";
+    try {
+        $pdo = new PDO($dsn, $config['pgUser'], $config['pgPassword'], [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ]);
+        echo "✅ Connected to database.\n\n";
+        return $pdo;
+    } catch (PDOException $e) {
+        die("❌ Connection failed: " . $e->getMessage() . "\n\n");
+    }
+}
 
-// ——— Connect to PostgreSQL ———
-$dsn = "pgsql:host={$databases['pgHost']};port={$port};dbname={$dbname}";
-$pdo = new PDO($dsn, $username, $password, [
-  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+// Apply schema files
+function applyModels(PDO $pdo, array $modelFiles): void {
+    foreach ($modelFiles as $table => $path) {
+        echo "📄 Applying model from $table [$path]...\n";
+        $sql = @file_get_contents($path);
+
+        if ($sql === false) {
+            echo "❌ Could not read $path\n";
+            continue;
+        }
+
+        try {
+            $pdo->exec($sql);
+            echo "✅ model applied: $table\n";
+        } catch (PDOException $e) {
+            echo "❌ Error applying model for $table: " . $e->getMessage() . "\n";
+        }
+    }
+}
+
+// Seed users
+function seedAdmins(PDO $pdo, array $admins): void {
+    echo "\n🌱 Seeding admins…\n";
+
+    $stmt = $pdo->prepare("
+        INSERT INTO users (username, first_name, last_name, password, role)
+        VALUES (:username, :first_name, :last_name, :password, :role)
+    ");
+
+    foreach ($admins as $admin) {
+        try {
+            $stmt->execute([
+                ':username' => $admin['username'],
+                ':first_name' => $admin['first_name'],
+                ':last_name' => $admin['last_name'],
+                ':password' => password_hash($admin['password'], PASSWORD_DEFAULT),
+                ':role' => $admin['role'],
+            ]);
+            echo "✅ Inserted admin: {$admin['username']}\n";
+        } catch (PDOException $e) {
+            echo "❌ Failed to insert admin {$admin['username']}: " . $e->getMessage() . "\n";
+        }
+    }
+}
+
+// Main execution
+$pdo = connectToDatabase($databases);
+
+applyModels($pdo, [
+    'users'    => 'database/users.model.sql',
+    'trips'    => 'database/trips.model.sql',
+    'bookings' => 'database/bookings.model.sql',
+    'payments' => 'database/payments.model.sql',
 ]);
 
-// Just indicator it was working
-echo "Applying schema from database/users.model.sql…\n";
+seedAdmins($pdo, $admins);
 
-$sql = file_get_contents('database/users.model.sql');
-
-// Another indicator but for failed creation
-if ($sql === false) {
-  throw new RuntimeException("Could not read database/users.model.sql");
-} else {
-  echo "Creation Success from the database/users.model.sql";
-}
-
-
-// simple indicator command seeding started
-echo "Seeding users…\n";
-
-// query preparations. NOTE: make sure they matches order and number
-$stmt = $pdo->prepare("
-    INSERT INTO users (username, first_name, last_name, password, role)
-    VALUES (:username, :first_name, :last_name, :password, :role)
-");
-
-// plug-in datas from the staticData and add to the database
-foreach ($users as $u) {
-  $stmt->execute([
-    ':username' => $u['username'],
-    ':first_name' => $u['first_name'],
-    ':last_name' => $u['last_name'],
-    ':password' => password_hash($u['password'], PASSWORD_DEFAULT),
-    ':role' => $u['role'],
-  ]);
-}
-
-// bookings
-
-
-// Just indicator it was working
-echo "Applying schema from database/bookings.model.sql…\n";
-
-$sql = file_get_contents('database/bookings.model.sql');
-
-// Another indicator but for failed creation
-if ($sql === false) {
-    throw new RuntimeException("Could not read database/bookings.model.sql");
-} else {
-    echo "Creation Success from the database/bookings.model.sql";
-}
-
-// simple indicator command seeding started
-echo "Seeding bookings…\n";
-
-// query preparations. NOTE: make sure they matches order and number
-$stmt = $pdo->prepare("
-    INSERT INTO bookings (location_name, description, booking_date, duration_of_days, start_time, end_time)
-    VALUES (:location_name, :description, :booking_date, :duration_of_days, :start_time, :end_time)
-");
-
-// plug-in datas from the staticData and add to the database
-foreach ($bookings as $b) {
-    $stmt->execute([
-        ':location_name' => $b['location_name'],
-        ':description' => $b['description'],
-        ':booking_date' => $b['booking_date'],
-        ':duration_of_days' => $b['duration_of_days'],
-        ':start_time' => $b['start_time'],
-        ':end_time' => $b['end_time'],
-    ]);
-}
+echo "\n🏁 Database Seeding complete.\n";
