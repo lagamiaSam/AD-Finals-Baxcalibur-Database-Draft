@@ -1,6 +1,31 @@
 <?php
 require_once '../../bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
+require_once UTILS_PATH . '/auth.util.php';
+require_once UTILS_PATH . '/envSetter.util.php';
+require_once UTILS_PATH . '/userPage.util.php';
+
+// Start session and verify user is logged in
+Auth::init();
+if (!Auth::check()) {
+    header('Location: /pages/loginPage/index.php');
+    exit;
+}
+
+$loggedUser = Auth::user();
+
+// Connect to PostgreSQL
+$dsn = "pgsql:host={$databases['pgHost']};port={$databases['pgPort']};dbname={$databases['pgDB']}";
+$pdo = new PDO($dsn, $databases['pgUser'], $databases['pgPassword'], [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+]);
+
+// Fetch full user data
+$user = UserPage::fetchCurrentUser($pdo, $loggedUser['id']);
+if (!$user) {
+    header('Location: /pages/loginPage/index.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +42,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Fontawesome CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Global CSS -->
   <link rel="stylesheet" href="/assets/css/style.css" />
@@ -31,19 +55,10 @@ require_once BASE_PATH . '/vendor/autoload.php';
 </head>
 
 <body>
-  <?php
-require_once '../../bootstrap.php';
-require_once BASE_PATH . '/vendor/autoload.php';
-
-$currentPage = 'user-dashboard';
-?>
-
-  <!-- Include Navbar -->
+  <?php $currentPage = 'user-dashboard'; ?>
   <?php include_once BASE_PATH . '/layouts/navbar.php'; ?>
 
-  <!-- User Dashboard Wrapper with Background -->
   <div class="user-dashboard-wrapper">
-    <!-- DASHBOARD SECTION -->
     <section class="dashboard-section">
       <h1 class="dashboard-title">user dashboard</h1>
 
@@ -51,16 +66,13 @@ $currentPage = 'user-dashboard';
         <!-- USER INFO -->
         <div class="user-info">
           <div class="user-profile">
-            <!-- Profile Icon or Image -->
             <div class="user-avatar">
               <span class="material-icons" style="font-size: 100px;">account_circle</span>
             </div>
 
-            <!-- User Details -->
             <div class="user-details">
-              <h2 class="user-greeting">Hello, <span>Kent.</span></h2>
-              <p><span class="label">Email:</span> kentvalencia@gmail.com</p>
-              <p><span class="label">Number:</span> 0994567780</p>
+              <h2 class="user-greeting">Hello, <span><?= htmlspecialchars($user['name']) ?>.</span></h2>
+              <p><span class="label">Username:</span> <?= htmlspecialchars($user['username']) ?></p>
               <p><span class="label">Country:</span> Philippines</p>
             </div>
           </div>
@@ -83,8 +95,6 @@ $currentPage = 'user-dashboard';
     </section>
   </div>
 
-  <!-- Include Footer -->
   <?php include_once BASE_PATH . '/layouts/footer.php'; ?>
 </body>
-
 </html>
