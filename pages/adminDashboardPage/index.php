@@ -102,5 +102,17 @@ $users = AdminPage::displayUsers($pdo, $search, $sortOrder);
 
     <?php include_once BASE_PATH . '/layouts/footer.php'; ?>
   </div>
+    <!-- ✅ Alert for Login Success -->
+  <?php
+    $successMessage = trim((string) ($_GET['message'] ?? ''));
+    $successMessage = str_replace("%", " ", $successMessage);
+    if (!empty($successMessage)):
+  ?>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        alert("<?= htmlspecialchars($successMessage, ENT_QUOTES) ?>");
+      });
+    </script>
+  <?php endif; ?>
 </body>
 </html>

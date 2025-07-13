@@ -32,16 +32,16 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = Auth::user();
 //AYUSIN
         if ($user["role"] == "admin") {
-            header('Location: /pages/adminDashboardPage/index.php');
+            header('Location: /pages/adminDashboardPage/index.php?message=Login successful!');
         } 
         elseif ($user["role"] == "user") {
-            header('Location: /pages/userDashboardPage/index.php');
+            header('Location: /pages/userDashboardPage/index.php?message=Login successful!');
         } else {
             header('Location: /index.php');
         }
         exit;
     } else { 
-        header('Location: /pages/loginPage/index.php?error=Invalid%Credentials');
+        header('Location: /pages/loginPage/index.php?error=Invalid%Credentials,%Please%Try%Again.');
         exit;
     }
 }
