@@ -32,7 +32,6 @@ Auth::logout();
 </head>
 
 <body>
-
     <header>
         <nav>
             <!-- Nav Bar Brand -->

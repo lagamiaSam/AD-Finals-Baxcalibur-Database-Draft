@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
