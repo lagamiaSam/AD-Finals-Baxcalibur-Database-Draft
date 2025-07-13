@@ -102,6 +102,37 @@ html, body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* ===== THEMED SEARCH BUTTON ===== */
+.admin-filter-form .btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #d63cff;
+  border-radius: 2rem;
+  background-color: transparent;
+  color: #d63cff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px #d63cff;
+}
+
+.admin-filter-form .btn:hover {
+  background-color: #d63cff;
+  color: black;
+  box-shadow: 0 0 15px #d63cff;
+}
+
+
+/* ===== BOOKINGS SECTION SPACING ===== */
+.admin-accounts-card + .admin-accounts-card {
+  margin-top: 3rem;
+}
+
+/* Optional: Specific heading color override for clarity */
+.admin-accounts-card h2 {
+  color: #d63cff;
+  margin-bottom: 1rem;
+}
+
 /* ===== FOOTER ADJUSTMENT ===== */
 .site-footer {
   margin-top: auto; /* stick to bottom */
