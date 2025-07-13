@@ -5,6 +5,11 @@ require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 require_once UTILS_PATH . '/userPage.util.php';
 
+require_once HANDLERS_PATH . '/booking.handler.php';
+require_once UTILS_PATH . '/booking.util.php';
+
+Auth::init();
+
 // // Start session and verify user is logged in
 // Auth::init();
 // if (!Auth::check()) {
@@ -17,10 +22,11 @@ require_once UTILS_PATH . '/userPage.util.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trips | Baxcalibur</title>
+  <title>Lumina Edge | Baxcalibur</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +34,8 @@ require_once UTILS_PATH . '/userPage.util.php';
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Fontawesome CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Global CSS -->
   <link rel="stylesheet" href="/assets/css/style.css" />
@@ -44,10 +51,16 @@ require_once UTILS_PATH . '/userPage.util.php';
   <?php $currentPage = 'user-dashboard'; ?>
   <?php include_once BASE_PATH . '/layouts/navbar.php'; ?>
 
-     <!-- Explore Section -->
+  <!-- Explore Section -->
 
-<section id="tripsSection" class="trips-section">
-    <h1>Welcome to Lumia Edge</h1>
+  <section id="tripsSection" class="trips-section">
+    <h1>Welcome to Lumina Edge</h1>
     <h2>Itenerary</h2>
-    <button> Book</button>
-</section>
+
+    <form action="/handlers/booking.handler.php" method="POST">
+      <input type="hidden" name="trip_id" value="2">
+      <button type="submit" class="button">Book</button>
+    </form>
+
+
+  </section>

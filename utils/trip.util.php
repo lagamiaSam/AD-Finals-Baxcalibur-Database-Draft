@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 include_once UTILS_PATH . "/envSetter.util.php";
 
-class UserPage
+class Trip
 {
-
-    public static function fetchCurrentUser(PDO $pdo, string $userId): ?array
+    public static function fetchTripData(PDO $pdo, string $userId): ?array
     {
         try {
             $stmt = $pdo->prepare('

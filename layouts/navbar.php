@@ -27,10 +27,10 @@
         <a href="/pages/tripsPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Trips</a>
       </li>
       <li>
-        <a href="/pages/adminDashboardPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Admin Dashboard</a>
-      </li>
-      <li>
-        <a id="loginBtnLink" href="/index.php">Log Out</a>
+        <form action="/handlers/auth.handler.php" method="POST">
+          <input type="hidden" name="action" value="logout">
+          <button type="submit" class="button">Log Out</button>
+        </form>
       </li>
     </ul>
   </div>
