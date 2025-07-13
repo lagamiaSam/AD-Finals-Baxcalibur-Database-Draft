@@ -4,7 +4,9 @@ require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
 require_once UTILS_PATH . '/userPage.util.php';
+require_once HANDLERS_PATH . '/payment.handler.php';
 
+// require_once UTILS_PATH . '/payment.util.php';
 // Start session and verify user is logged in
 Auth::init();
 if (!Auth::check()) {
@@ -94,6 +96,12 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
                 <button class="remove-booking">
                   <span class="material-icons">close</span>
                 </button>
+                <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
+                  <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']?? '') ?>" />
+                  <button class="pay-now" type="submit">
+                  <span class="material-icons">payments</span>Pay Now
+                </button>
+                </form>
               </div>
             <?php endforeach; ?>
           <?php else: ?>
