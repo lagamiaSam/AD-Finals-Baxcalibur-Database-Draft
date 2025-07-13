@@ -68,13 +68,16 @@ $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- ACCOUNTS TABLE -->
         <div class="admin-accounts-card">
-          <div class="card-header">
-            <h2>Accounts:</h2>
-            <form method="GET" class="admin-filter-form" style="display: flex; gap: 10px; align-items: center;">
-              <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search user..." class="admin-search" />
-              <button type="submit" class="btn">Search</button>
-            </form>
-          </div>
+  <div class="card-header">
+    <h2>Accounts:</h2>
+   <form method="GET" class="admin-filter-form" style="display: flex; gap: 10px; align-items: center;">
+  <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search user..." class="admin-search" />
+  <button type="submit" class="btn">Search</button>
+  <?php if (!empty($search)): ?>
+    <button type="button" class="btn" onclick="window.location.href='/pages/adminDashboardPage/index.php'">Clear</button>
+  <?php endif; ?>
+</form>
+  </div>
 
           <div class="admin-table-wrapper">
             <table class="admin-table">
