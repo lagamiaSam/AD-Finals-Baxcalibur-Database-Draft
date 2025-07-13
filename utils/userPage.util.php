@@ -43,4 +43,30 @@ class UserPage
             return null;
         }
     }
+
+    /**
+     * Fetch all bookings made by the user, including related trip info.
+     *
+     * @param PDO $pdo
+     * @param string $userId
+     * @return array
+     */
+    public static function fetchUserBookings(PDO $pdo, string $userId): array
+    {
+        try {
+            $stmt = $pdo->prepare('
+                SELECT t.destination, t.description, t.booking_date,
+                b.booking_status, b.payment_status
+                FROM public."bookings" b
+                JOIN public."trips" t ON b.trip_id = t.id
+                WHERE b.user_id = :user_id
+                ORDER BY t.booking_date DESC
+            ');
+            $stmt->execute(['user_id' => $userId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('[UserPage::fetchUserBookings] PDOException: ' . $e->getMessage());
+            return [];
+        }
+    }
 }

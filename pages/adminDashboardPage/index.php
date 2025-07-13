@@ -5,12 +5,15 @@ require_once UTILS_PATH . '/envSetter.util.php';
 require_once UTILS_PATH . '/adminPage.util.php';
 require_once UTILS_PATH . '/auth.util.php';
 
-// Optional: Check if logged-in user is admin
 Auth::init();
 if (!Auth::check() || Auth::user()['role'] !== 'admin') {
     header('Location: /pages/loginPage/index.php');
     exit;
 }
+
+// Handle search input
+$search = $_GET['search'] ?? '';
+$sortOrder = 'asc'; // Always sort A-Z internally
 
 // Connect to PostgreSQL
 $dsn = "pgsql:host={$databases['pgHost']};port={$databases['pgPort']};dbname={$databases['pgDB']}";
@@ -18,7 +21,7 @@ $pdo = new PDO($dsn, $databases['pgUser'], $databases['pgPassword'], [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 ]);
 
-$users = AdminPage::displayUsers($pdo);
+$users = AdminPage::displayUsers($pdo, $search, $sortOrder);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +61,11 @@ $users = AdminPage::displayUsers($pdo);
         <div class="admin-accounts-card">
           <div class="card-header">
             <h2>Accounts:</h2>
-            <input type="text" placeholder="Search user..." class="admin-search" />
+            <!-- Search Only -->
+            <form method="GET" class="admin-filter-form" style="display: flex; gap: 10px; align-items: center;">
+              <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search user..." class="admin-search" />
+              <button type="submit" class="btn">Search</button>
+            </form>
           </div>
 
           <div class="admin-table-wrapper">
@@ -73,20 +80,18 @@ $users = AdminPage::displayUsers($pdo);
                 </tr>
               </thead>
               <tbody>
-                <?php if ($users && count($users) > 0): ?>
+                <?php if (!empty($users)): ?>
                   <?php foreach ($users as $user): ?>
                     <tr>
                       <td><?= htmlspecialchars($user['id']) ?></td>
                       <td><?= htmlspecialchars($user['username']) ?></td>
                       <td><?= htmlspecialchars($user['name']) ?></td>
-                      <td><?= htmlspecialchars($user['booked'] ?? 'N/A') ?></td>
-                      <td><?= htmlspecialchars($user['payment'] ?? 'N/A') ?></td>
+                      <td><?= htmlspecialchars($user['booked']) ?></td>
+                      <td><?= htmlspecialchars($user['payment']) ?></td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
-                  <tr>
-                    <td colspan="4">No users found.</td>
-                  </tr>
+                  <tr><td colspan="5">No users found.</td></tr>
                 <?php endif; ?>
               </tbody>
             </table>

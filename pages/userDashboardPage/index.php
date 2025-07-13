@@ -26,11 +26,13 @@ if (!$user) {
     header('Location: /pages/loginPage/index.php');
     exit;
 }
+
+// Fetch user bookings
+$bookings = UserPage::fetchUserBookings($pdo, $user['id']);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -81,20 +83,24 @@ if (!$user) {
         <!-- BOOKINGS -->
         <div class="bookings-info">
           <h2>my bookings:</h2>
-          <div class="booking-card">
-            <p><span class="label">Place:</span> VANTAC-X</p>
-            <p><span class="label">Itinerary:</span> "SoloPath Runtime"</p>
-            <p><span class="label">Date:</span> 08/16/2X8Z</p>
-            <button class="remove-booking">
-              <span class="material-icons">close</span>
-            </button>
-          </div>
+          <?php if (!empty($bookings)): ?>
+            <?php foreach ($bookings as $booking): ?>
+              <div class="booking-card">
+                <p><span class="label">Place:</span> <?= htmlspecialchars($booking['destination']) ?></p>
+                <p><span class="label">Itinerary:</span> <?= htmlspecialchars($booking['description']) ?></p>
+                <p><span class="label">Date:</span> <?= htmlspecialchars($booking['booking_date']) ?></p>
+                <p><span class="label">Booking Status:</span> <?= htmlspecialchars($booking['booking_status']) ?></p>
+                <p><span class="label">Payment Status:</span> <?= htmlspecialchars($booking['payment_status']) ?></p>
+                <button class="remove-booking">
+                  <span class="material-icons">close</span>
+                </button>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p>No bookings found.</p>
+          <?php endif; ?>
           <a href="#" class="add-booking">Add more bookings <span class="highlight">here</span>.</a>
         </div>
       </div>
     </section>
   </div>
-
-  <?php include_once BASE_PATH . '/layouts/footer.php'; ?>
-</body>
-</html>
