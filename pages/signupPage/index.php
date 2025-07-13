@@ -92,63 +92,117 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Password confirmation validation
-      const passwordInput = document.getElementById('password');
-      const confirmInput = document.getElementById('confirm-password');
-      const errorMessage = document.createElement('p');
-      errorMessage.style.color = 'red';
-      errorMessage.style.marginTop = '5px';
-      confirmInput.parentNode.appendChild(errorMessage);
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const submitButton = document.querySelector('button[type="submit"]');
 
-      function validatePasswordMatch() {
-        if (confirmInput.value === '') {
-          errorMessage.textContent = '';
-          confirmInput.setCustomValidity('');
-          return;
-        }
+    const constraints = {
+      firstName: (val) => val.trim().length >= 2,
+      lastName: (val) => val.trim().length >= 2,
+      username: (val) => val.length >= 8,
+      password: (val) => /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(val),
+      confirmPassword: (val) => val === password.value
+    };
 
-        if (passwordInput.value !== confirmInput.value) {
-          errorMessage.textContent = 'Passwords do not match.';
-          confirmInput.setCustomValidity('Passwords do not match.');
+    const errorMessages = {
+      firstName: "First name must be at least 2 characters.",
+      lastName: "Last name must be at least 2 characters.",
+      username: "Username must be at least 8 characters.",
+      password: "Password must be at least 8 characters, include 1 uppercase, 1 number, and 1 symbol.",
+      confirmPassword: "Passwords do not match."
+    };
+
+    const fields = [
+      { el: firstName, key: 'firstName' },
+      { el: lastName, key: 'lastName' },
+      { el: username, key: 'username' },
+      { el: password, key: 'password' },
+      { el: confirmPassword, key: 'confirmPassword' }
+    ];
+
+    function validateAllFields() {
+      let allValid = true;
+
+      fields.forEach(({ el, key }) => {
+        const value = el.value;
+        const isValid = constraints[key](value);
+        const errorId = el.id + '-error';
+        let errorEl = document.getElementById(errorId);
+
+        if (!isValid) {
+          allValid = false;
+          el.classList.add('invalid');
+          el.classList.remove('valid');
+          el.setCustomValidity(errorMessages[key]);
+
+if (!errorEl) {
+  errorEl = document.createElement('p');
+  errorEl.id = errorId;
+  errorEl.classList.add('error-message'); // ✅ Use class instead
+  el.insertAdjacentElement('afterend', errorEl);
+}
+
+          errorEl.textContent = errorMessages[key];
         } else {
-          errorMessage.textContent = '';
-          confirmInput.setCustomValidity('');
-        }
-      }
+          el.classList.remove('invalid');
+          el.classList.add('valid');
+          el.setCustomValidity('');
 
-      passwordInput.addEventListener('input', validatePasswordMatch);
-      confirmInput.addEventListener('input', validatePasswordMatch);
-
-      // Modal logic
-      const modal = document.getElementById('success-modal');
-      const closeBtn = modal.querySelector('.close-btn');
-
-      // Fix: get URL params object
-      const params = new URLSearchParams(window.location.search);
-      const message = params.get('message');
-
-      if (message && decodeURIComponent(message).toLowerCase().includes('account created')) {
-        modal.classList.add('active');
-        // Remove query param from URL for cleanliness
-        const url = new URL(window.location);
-        url.searchParams.delete('message');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      }
-
-      closeBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-      });
-
-      // Close modal if click outside modal content
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.remove('active');
+          if (errorEl) errorEl.remove();
         }
       });
-    });
-  </script>
+
+      submitButton.disabled = !allValid;
+    }
+
+fields.forEach(({ el, key }) => {
+  // Realtime border validation
+  el.addEventListener('input', () => {
+    const isValid = constraints[key](el.value);
+    el.classList.toggle('valid', isValid);
+    el.classList.toggle('invalid', !isValid);
+    validateSubmitButton(); // Keep button disabled until all valid
+  });
+
+  // Show error on blur
+  el.addEventListener('blur', () => {
+    const isValid = constraints[key](el.value);
+    const errorId = el.id + '-error';
+    let errorEl = document.getElementById(errorId);
+
+    if (!isValid) {
+      el.setCustomValidity(errorMessages[key]);
+      if (!errorEl) {
+        errorEl = document.createElement('p');
+        errorEl.id = errorId;
+        errorEl.classList.add('error-message');
+        el.insertAdjacentElement('afterend', errorEl);
+      }
+      errorEl.textContent = errorMessages[key];
+    } else {
+      el.setCustomValidity('');
+      if (errorEl) errorEl.remove();
+    }
+  });
+});
+
+function validateSubmitButton() {
+  const allValid = fields.every(({ el, key }) => constraints[key](el.value));
+  submitButton.disabled = !allValid;
+}
+
+
+
+    // Initial disable on load
+    submitButton.disabled = true;
+  });
+</script>
+
 </body>
 
 </html>
