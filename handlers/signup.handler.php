@@ -1,10 +1,11 @@
 <?php 
+
 declare(strict_types=1);
 require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
-require_once UTILS_PATH . '/auth.util.php';
 require_once UTILS_PATH . '/envSetter.util.php';
-require_once UTILS_PATH . '/signup.util.php'; // Include your Signup class
+require_once UTILS_PATH . '/auth.util.php';
+require_once UTILS_PATH . '/signup.util.php';
 
 // Initialize session
 Auth::init();
@@ -27,7 +28,6 @@ $action = $_REQUEST['action'] ?? null;
 if ($action === 'signup' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $formData = [
         'first_name' => $_POST['first_name'] ?? '',
-        'middle_name' => $_POST['middle_name'] ?? '',
         'last_name' => $_POST['last_name'] ?? '',
         'username' => $_POST['username'] ?? '',
         'password' => $_POST['password'] ?? '',
@@ -46,8 +46,10 @@ if ($action === 'signup' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         Signup::create($pdo, $formData);
+        Auth::login($pdo, $formData['username'], $formData['password']);
+        $user = Auth::user();
         // Updated redirect with urlencode:
-        header('Location: /pages/signupPage/index.php?message=' . urlencode('Account created successfully'));
+        header('Location: /pages/userDashboardPage/index.php?message=' . urlencode('Account created successfully'));
         exit;
     } catch (PDOException $e) {
         // Handle duplicate username or DB errors

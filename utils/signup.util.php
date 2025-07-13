@@ -5,12 +5,6 @@ include_once UTILS_PATH . '/envSetter.util.php';
 
 class Signup
 {
-    /**
-     * Validate the raw input; returns an array of error messages (empty if valid)
-     *
-     * @param array $data  Expecting keys: first_name, middle_name, last_name, username, password, confirm_password, role
-     * @return string[]    List of validation errors
-     */
     public static function validate(array $data): array
     {
         $errors = [];
@@ -73,9 +67,9 @@ class Signup
         // Prepare insert
         $stmt = $pdo->prepare("
             INSERT INTO public.\"users\"
-              (first_name, middle_name, last_name, username, password, role)
+              (first_name, last_name, username, password, role)
             VALUES
-              (:first, :middle, :last, :username, :password, :role)
+              (:first_name, :last_name, :username, :password, :role)
         ");
 
         // Hash password
@@ -83,9 +77,8 @@ class Signup
 
         // Bind and execute
         $stmt->execute([
-            ':first' => trim($data['first_name']),
-            ':middle' => trim($data['middle_name']) !== '' ? trim($data['middle_name']) : null,
-            ':last' => trim($data['last_name']),
+            ':first_name' => trim($data['first_name']),
+            ':last_name' => trim($data['last_name']),
             ':username' => trim($data['username']),
             ':password' => $hashed,
             ':role' => trim($data['role']),
