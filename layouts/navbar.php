@@ -24,6 +24,9 @@
         <a href="/pages/userDashboardPage/index.php" class="<?= $currentPage === 'user-dashboard' ? 'active-link' : '' ?>">User Dashboard</a>
       </li>
       <li>
+        <a href="/pages/tripsPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Trips</a>
+      </li>
+      <li>
         <a href="/pages/adminDashboardPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Admin Dashboard</a>
       </li>
       <li>

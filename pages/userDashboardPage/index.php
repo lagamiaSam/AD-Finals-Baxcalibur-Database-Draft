@@ -99,7 +99,7 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
           <?php else: ?>
             <p>No bookings found.</p>
           <?php endif; ?>
-          <a href="#" class="add-booking">Add more bookings <span class="highlight">here</span>.</a>
+          <a href="../tripsPage/index.php" class="add-booking">Add more bookings <span class="highlight">here</span>.</a>
         </div>
       </div>
     </section>
