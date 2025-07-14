@@ -24,7 +24,13 @@
         <a href="/pages/userDashboardPage/index.php" class="<?= $currentPage === 'user-dashboard' ? 'active-link' : '' ?>">User Dashboard</a>
       </li>
       <li>
-        <a href="/pages/tripsPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Trips</a>
+        <a href="/pages/itineraryFirstPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">Trips</a>
+      </li>
+      <li>
+        <a href="/pages/itinerarySecondPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">2nd iti</a>
+      </li>
+       <li>
+        <a href="/pages/itineraryThirdPage/index.php" class="<?= $currentPage === 'admin-dashboard' ? 'active-link' : '' ?>">3rd iti</a>
       </li>
       <li>
         <form action="/handlers/auth.handler.php" method="POST">
