@@ -129,3 +129,26 @@ body {
 .highlight {
   color: #d63cff;
 }
+.pay-now,
+.cancel-now {
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px 5px 0 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cancel-now {
+  background-color: #e53935;
+}
+
+.pay-now:hover,
+.cancel-now:hover {
+  opacity: 0.9;
+}

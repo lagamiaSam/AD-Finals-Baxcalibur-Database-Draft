@@ -6,7 +6,6 @@ require_once UTILS_PATH . '/envSetter.util.php';
 require_once UTILS_PATH . '/userPage.util.php';
 require_once HANDLERS_PATH . '/payment.handler.php';
 
-// require_once UTILS_PATH . '/payment.util.php';
 // Start session and verify user is logged in
 Auth::init();
 if (!Auth::check()) {
@@ -95,20 +94,33 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id'])?? [];
                 <p><span class="label">Date:</span> <?= htmlspecialchars($booking['booking_date']) ?></p>
                 <p><span class="label">Booking Status:</span> <?= htmlspecialchars($booking['booking_status']) ?></p>
                 <p><span class="label">Payment Status:</span> <?= htmlspecialchars($booking['payment_status']) ?></p>
-                <p><span class="label">Amount:</span> <?= $booking['price'] ?></p>
-                <button class="remove-booking">
-                  <span class="material-icons">close</span>
-                </button>
+                <p><span class="label">Amount:</span> <?= htmlspecialchars($booking['price']) ?></p>
 
-                <?php if ($booking['payment_status'] !== "Paid"): ?>
-                  <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
-                    <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
-                    <input type="hidden" name="amount" value="<?= $booking['price'] ?>" />
-                    <button class="pay-now" type="submit">
-                      <span class="material-icons">payments</span>Pay Now
-                    </button>
-                  </form>
-                <?php endif; ?>
+<?php
+  $paymentStatus = $booking['payment_status'];
+  $bookingStatus = $booking['booking_status'];
+
+  // Only show buttons if not Paid and not Cancelled
+  if ($paymentStatus !== "Paid" && $bookingStatus !== "Cancelled"):
+?>
+  <!-- Payment Form -->
+  <form class="payment-form" action="/handlers/payment.handler.php" method="POST" style="display:inline-block;">
+    <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
+    <input type="hidden" name="amount" value="<?= htmlspecialchars($booking['price']) ?>" />
+    <button class="pay-now" type="submit">
+      <span class="material-icons">payments</span>Pay Now
+    </button>
+  </form>
+
+  <!-- Cancel Form -->
+  <form class="cancel-form" action="/handlers/cancel.handler.php" method="POST" style="display:inline-block;">
+    <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
+    <button class="cancel-now" type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');">
+      <span class="material-icons">cancel</span>Cancel
+    </button>
+  </form>
+<?php endif; ?>
+
               </div>
             <?php endforeach; ?>
             <a href="../tripsPage/index.php" class="add-booking">Add more bookings <span
@@ -140,7 +152,6 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id'])?? [];
       });
     </script>
   <?php endif; ?>
-
 </body>
 
 </html>
