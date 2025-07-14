@@ -51,8 +51,8 @@ class UserPage
     {
         try {
             $stmt = $pdo->prepare('
-                SELECT t.destination, t.description, t.booking_date,
-                b.booking_status, b.payment_status
+                SELECT t.destination, t.description, t.booking_date, t.price,
+                b.booking_status, b.payment_status, b.id
                 FROM public."bookings" b
                 JOIN public."trips" t ON b.trip_id = t.id
                 WHERE b.user_id = :user_id

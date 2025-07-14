@@ -97,7 +97,8 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
                   <span class="material-icons">close</span>
                 </button>
                 <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
-                  <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']?? '') ?>" />
+                  <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
+                  <input type="hidden" name="amount" value="<?= $booking['price'] ?>" />
                   <button class="pay-now" type="submit">
                   <span class="material-icons">payments</span>Pay Now
                 </button>

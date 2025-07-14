@@ -5,17 +5,18 @@ include_once UTILS_PATH . "/envSetter.util.php";
 
 class Payment
 {
-    public static function createPayment(PDO $pdo, string $booking_id): void
-    {
-        $stmt = $pdo->prepare("
+  public static function createPayment(PDO $pdo, string $booking_id, $booking_amount): void
+  {
+    $stmt = $pdo->prepare("
             INSERT INTO public.\"payments\"
-              (booking_id)
+              (booking_id, amount)
             VALUES
-              (:booking_id)
+              (:booking_id, :amount)
         ");
 
-        $stmt->execute([
-            ':booking_id' => $booking_id
-        ]);
-    }
-  }  
+    $stmt->execute([
+      ':booking_id' => $booking_id,
+      ':amount' => $booking_amount
+    ]);
+  }
+}

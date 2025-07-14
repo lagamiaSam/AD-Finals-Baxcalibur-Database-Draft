@@ -33,34 +33,74 @@ function connectToDatabase(array $config): PDO
     }
 }
 
-function payBooking($pdo, $user_id)
+function payBooking($pdo, string $user_id)
 {
     $bookings = Booking::fetchUserBookings($pdo, $user_id);
+    $booking_id = $bookings['id'];
+    // echo "\nChecking booking:\n\n";
+    // print_r($booking_id);
 
-    if (!is_array($bookings)) {
-        die("❌ fetchUserBookings() did not return an array.\n\n");
-    }
+    $user_booking_id = $_REQUEST['booking_id'];
+    $booking_amount = $_REQUEST['amount'];
+    // echo "\nChecking booking:\n\n";
+    // print_r($user_booking_id);
 
-    $booking_id = $_REQUEST['booking_id'] ?? null;
-
-    echo "\nDEBUG: booking_id from form: ";
-    var_dump($booking_id);
-
-    echo "\nDEBUG: Bookings fetched:\n";
-    print_r($bookings);
-
-    foreach ($bookings as $booking) {
-        echo "\nChecking booking:\n";
-        print_r($booking);
-
-        if (is_array($booking) && isset($booking['id']) && (string)$booking_id === (string)$booking['id']) {
-            Payment::createPayment($pdo, $booking_id);
+    if ($user_booking_id == $booking_id) {
+            Payment::createPayment($pdo, $booking_id, $booking_amount);
             echo "✅ Payment created for booking: $booking_id\n\n";
             return;
         }
-    }
 
-    echo "❌ Booking ID not found or invalid.\n\n";
+    // foreach ($bookings as $booking) {
+    //     echo "\nChecking booking:\n\n";
+    //     print_r($booking);
+
+    //     if ($booking == $booking_id) {
+    //         Payment::createPayment($pdo, $booking_id);
+    //         echo "✅ Payment created for booking: $booking_id\n\n";
+    //         return;
+    //     }
+    // }
+    // $booking_id = $bookings['id'];
+
+    // echo "\nDEBUG: booking_id from form: ";
+    // var_dump($bookings);
+
+    
+//  $userBooking = $_REQUEST['booking_id'] ?? null;
+//     echo "\nChecking booking:\n\n";
+//     print_r($bookings);
+//     $booking_id = $userBooking['id'];
+    
+
+    // if (!is_array($bookings)) {
+    //     die("❌ fetchUserBookings() did not return an array.\n\n");
+    // }
+
+    // foreach ($bookings as $booking) {
+    //     // echo "\nChecking booking:\n\n";
+    //     // print_r($booking);
+
+    //     if ($booking_id == $booking) {
+
+
+    //         Payment::createPayment($pdo, $booking_id);
+    //         echo "✅ Payment created for booking: $booking_id\n\n";
+    //         return;
+    //     }
+    
+
+    // echo "\nDEBUG: booking_id from form: ";
+    // var_dump($booking_id['id']);
+
+    // echo "\nDEBUG: Bookings fetched:\n\n";
+    // print_r($bookings);
+
+
+    
+    // }
+
+    // echo "❌ Booking ID not found or invalid.\n\n";
 }
 
    

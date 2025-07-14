@@ -20,6 +20,9 @@ class Booking
         ]);
     }
 
+
+
+
     function seedAdmins(PDO $pdo, array $admins): void
     {
         echo "\n🌱 Seeding admins…\n";
@@ -50,25 +53,23 @@ class Booking
     {
         try {
             $stmt = $pdo->prepare('
-                SELECT id, username, first_name, last_name, role
-                FROM public."users"
-                WHERE id = :id
+                SELECT id, user_id, trip_id, payment_status, booking_status, created_at, updated_at
+                FROM public."bookings"
+                WHERE user_id = :user_id
                 LIMIT 1
             ');
-            $stmt->execute(['id' => $userId]);
+            $stmt->execute(['user_id' => $userId]);
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($row) {
-                $fullName = trim($row['first_name'] . ' ' . $row['last_name']);
-
                 return [
                     'id' => $row['id'],
-                    'username' => $row['username'],
-                    'name' => $fullName,
-                    'role' => $row['role'],
-                    'booked' => 'N/A',
-                    'payment' => 'N/A'
+                    'user_id' => $row['user_id'],
+                    'trip_id' => $row['trip_id'],
+                    'payment_status' => $row['payment_status'],
+                    'booking_status' => $row['booking_status'],
+                    'created_at' => $row['created_at']
                 ];
             }
 
