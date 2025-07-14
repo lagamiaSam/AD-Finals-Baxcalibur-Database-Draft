@@ -3,8 +3,6 @@ require_once BASE_PATH . '/bootstrap.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once UTILS_PATH . '/auth.util.php';
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,8 +52,7 @@ require_once UTILS_PATH . '/auth.util.php';
                         <a class="active-link" href="index.php" title="View Homepage">Home</a>
                     </li>
                     <li><a href="" title="View Services">Services</a></li>
-                    <li><a href="" title="View About Information">About</a></li>
-                    
+                    <li><a href = "./pages/aboutUsPage/index.php" title="View About Information">About</a></li>
                     <li>
                         <!-- Log In Button Link-->
                         <a id="loginBtnLink" href="../pages/loginPage/index.php" title="Login to Your Account">Log
@@ -147,7 +144,6 @@ require_once UTILS_PATH . '/auth.util.php';
     <!-- Footer Section -->
 <footer class="site-footer">
   <div class="footer-container">
-    
     <!-- Logo -->
     <div class="footer-logo">
       <img src="./assets/img/baxcalibur-logo.png" alt="Baxcalibur Logo" />
