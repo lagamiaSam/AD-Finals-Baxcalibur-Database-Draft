@@ -10,8 +10,8 @@ require_once HANDLERS_PATH . '/payment.handler.php';
 // Start session and verify user is logged in
 Auth::init();
 if (!Auth::check()) {
-    header('Location: /pages/loginPage/index.php');
-    exit;
+  header('Location: /pages/loginPage/index.php');
+  exit;
 }
 
 $loggedUser = Auth::user();
@@ -19,22 +19,23 @@ $loggedUser = Auth::user();
 // Connect to PostgreSQL
 $dsn = "pgsql:host={$databases['pgHost']};port={$databases['pgPort']};dbname={$databases['pgDB']}";
 $pdo = new PDO($dsn, $databases['pgUser'], $databases['pgPassword'], [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 ]);
 
 // Fetch full user data
 $user = UserPage::fetchCurrentUser($pdo, $loggedUser['id']);
 if (!$user) {
-    header('Location: /pages/loginPage/index.php');
-    exit;
+  header('Location: /pages/loginPage/index.php');
+  exit;
 }
 
 // Fetch user bookings
-$bookings = UserPage::fetchUserBookings($pdo, $user['id']);
+$bookings = UserPage::fetchUserBookings($pdo, $user['id'])?? [];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,7 +47,8 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Fontawesome CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Global CSS -->
   <link rel="stylesheet" href="/assets/css/style.css" />
@@ -60,7 +62,7 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
 
 <body>
   <?php $currentPage = 'user-dashboard'; ?>
-  <?php include_once BASE_PATH . '/layouts/navbar.php'; ?>
+  <?php include_once LAYOUTS_PATH . '/userNavbar.layout.php'; ?>
 
   <div class="user-dashboard-wrapper">
     <section class="dashboard-section">
@@ -93,26 +95,34 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
                 <p><span class="label">Date:</span> <?= htmlspecialchars($booking['booking_date']) ?></p>
                 <p><span class="label">Booking Status:</span> <?= htmlspecialchars($booking['booking_status']) ?></p>
                 <p><span class="label">Payment Status:</span> <?= htmlspecialchars($booking['payment_status']) ?></p>
-                <span class="label">Amount:</span> <?= $booking['price'] ?></p>
+                <p><span class="label">Amount:</span> <?= $booking['price'] ?></p>
                 <button class="remove-booking">
                   <span class="material-icons">close</span>
                 </button>
 
                 <?php if ($booking['payment_status'] !== "Paid"): ?>
-                <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
-                  <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
-                  <input type="hidden" name="amount" value="<?= $booking['price'] ?>" />
-                  <button class="pay-now" type="submit">
-                  <span class="material-icons">payments</span>Pay Now
-                </button>
-                </form>
+                  <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
+                    <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
+                    <input type="hidden" name="amount" value="<?= $booking['price'] ?>" />
+                    <button class="pay-now" type="submit">
+                      <span class="material-icons">payments</span>Pay Now
+                    </button>
+                  </form>
                 <?php endif; ?>
               </div>
             <?php endforeach; ?>
+            <a href="../tripsPage/index.php" class="add-booking">Add more bookings <span
+                class="highlight">here</span>.</a>
           <?php else: ?>
-            <p>No bookings found.</p>
+            <div class="no-bookings">
+              <p>You have no bookings yet.</p>
+              <a href="../tripsPage/index.php" class="add-booking">Book your first trip <span
+                  class="highlight">here</span>.</a>
+            </div>
           <?php endif; ?>
-          <a href="../tripsPage/index.php" class="add-booking">Add more bookings <span class="highlight">here</span>.</a>
+
+          <a href="../tripsPage/index.php" class="add-booking">Add more bookings <span
+              class="highlight">here</span>.</a>
         </div>
       </div>
     </section>
@@ -120,10 +130,10 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
 
   <!-- ✅ Alert for Login Success -->
   <?php
-    $successMessage = trim((string) ($_GET['message'] ?? ''));
-    $successMessage = str_replace("%", " ", $successMessage);
-    if (!empty($successMessage)):
-  ?>
+  $successMessage = trim((string) ($_GET['message'] ?? ''));
+  $successMessage = str_replace("%", " ", $successMessage);
+  if (!empty($successMessage)):
+    ?>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         alert("<?= htmlspecialchars($successMessage, ENT_QUOTES) ?>");
@@ -132,4 +142,5 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
   <?php endif; ?>
 
 </body>
+
 </html>

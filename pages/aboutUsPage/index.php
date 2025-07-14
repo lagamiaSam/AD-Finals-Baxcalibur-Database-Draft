@@ -49,8 +49,7 @@ require_once BASE_PATH . '/vendor/autoload.php';
     <!-- Nav Bar Links -->
     <ul id="navbarLinks" class="navbar-links">
       <li><a class="active-link" href="/index.php" title="View Homepage">Home</a></li>
-      <li><a href="#" title="View Services">Services</a></li>
-      <li><a href="/index.php" title="Explore">Explore</a></li>
+      <li><a href="/index.php" title="About Us">About Us</a></li>
       <li><a id="loginBtnLink" href="/pages/loginPage/index.php" title="Login">Log In</a></li>
       <li><a id="signUpBtnLink" href="../signupPage/index.php" title="Sign Up">Sign Up</a></li>
     </ul>

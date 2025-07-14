@@ -60,7 +60,7 @@ $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
   <div class="page-wrapper">
-    <?php include_once BASE_PATH . '/layouts/navbar.php'; ?>
+    <?php require_once LAYOUTS_PATH . '/adminNavbar.layout.php'; ?>
 
     <div class="admin-dashboard-wrapper">
       <section class="admin-section">
