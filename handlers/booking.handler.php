@@ -38,16 +38,20 @@ function bookTrip($pdo, $user_id)
     if ($trip_id === '1' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
+        header('Location: /pages/userDashboardPage/index.php');
     }
 
     if ($trip_id === '2' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
+        header('Location: /userDashboardPage/index.php');
     }
 
     if ($trip_id === '3' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
+        header('Location: /pages/userDashboardPage/index.php');
+
     }
 }
 
