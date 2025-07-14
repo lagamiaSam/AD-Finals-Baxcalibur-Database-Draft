@@ -42,7 +42,7 @@ require_once UTILS_PATH . '/userPage.util.php';
 
 <body>
   <?php $currentPage = 'user-dashboard'; ?>
-  <?php include_once BASE_PATH . '/layouts/navbar.php'; ?>
+  <?php include_once LAYOUTS_PATH . '/userNavbar.layout.php'; ?>
 
      <!-- Explore Section -->
 
