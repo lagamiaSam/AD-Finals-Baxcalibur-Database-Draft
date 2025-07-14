@@ -9,16 +9,14 @@ require_once UTILS_PATH . '/userPage.util.php';
 require_once UTILS_PATH . '/booking.util.php';
 require_once UTILS_PATH . '/payment.util.php';
 
-
 Auth::init();
 
-function getUser()
+function getUser(): string
 {
     $loggedUser = Auth::user();
     return $loggedUser['id'];
 }
 
-// Connect to database
 function connectToDatabase(array $config): PDO
 {
     $dsn = "pgsql:host={$config['pgHost']};port={$config['pgPort']};dbname={$config['pgDB']}";
@@ -33,106 +31,32 @@ function connectToDatabase(array $config): PDO
     }
 }
 
-function payBooking($pdo, string $user_id)
+function payBooking(PDO $pdo, string $user_id): void
 {
-    $bookings = Booking::fetchUserBookings($pdo, $user_id);
-    // echo "\nChecking booking:\n\n";
-    // print_r($bookings);
+    // Check if required data exists in the request
+    if (!isset($_REQUEST['booking_id'], $_REQUEST['amount'])) {
+        echo "⚠️ booking_id or amount not set. Skipping payment processing.\n\n";
+        return;
+    }
 
     $user_booking_id = $_REQUEST['booking_id'];
     $booking_amount = $_REQUEST['amount'];
 
-    foreach ($bookings as $booking) {
-        echo "\nChecking booking:\n\n";
-        print_r($booking['id']);
+    $bookings = Booking::fetchUserBookings($pdo, $user_id);
 
-        if ($booking['id'] == $user_booking_id) {
-            Payment::createPayment($pdo, $user_booking_id,$booking_amount);
+    foreach ($bookings as $booking) {
+        if ($booking['id'] === $user_booking_id) {
+            Payment::createPayment($pdo, $user_booking_id, $booking_amount);
             Payment::updateBooking($pdo, $user_booking_id);
             echo "✅ Payment created for booking: $user_booking_id\n\n";
             return;
         }
     }
 
-    // $booking_id = $bookings['id'];
-    // // echo "\nChecking booking:\n\n";
-    // // print_r($booking_id);
-
-    // $user_booking_id = $_REQUEST['booking_id'];
-    // $booking_amount = $_REQUEST['amount'];
-    // // echo "\nChecking booking:\n\n";
-    // // print_r($user_booking_id);
-
-    // if ($user_booking_id == $booking_id) {
-    //     Payment::createPayment($pdo, $booking_id, $booking_amount);
-    //     Payment::updateBooking($pdo, $booking_id);
-    //     echo "\nChecking booking:\n\n";
-    //     print_r($booking_id);
-    //     echo "✅ Payment created for booking: $booking_id\n\n";
-    //     return;
-    // }
-
-    // foreach ($bookings as $booking) {
-    //     echo "\nChecking booking:\n\n";
-    //     print_r($booking);
-
-    //     if ($booking == $booking_id) {
-    //         Payment::createPayment($pdo, $booking_id);
-    //         echo "✅ Payment created for booking: $booking_id\n\n";
-    //         return;
-    //     }
-    // }
-    // $booking_id = $bookings['id'];
-
-    // echo "\nDEBUG: booking_id from form: ";
-    // var_dump($bookings);
-
-
-    //  $userBooking = $_REQUEST['booking_id'] ?? null;
-//     echo "\nChecking booking:\n\n";
-//     print_r($bookings);
-//     $booking_id = $userBooking['id'];
-
-
-    // if (!is_array($bookings)) {
-    //     die("❌ fetchUserBookings() did not return an array.\n\n");
-    // }
-
-    // foreach ($bookings as $booking) {
-    //     // echo "\nChecking booking:\n\n";
-    //     // print_r($booking);
-
-    //     if ($booking_id == $booking) {
-
-
-    //         Payment::createPayment($pdo, $booking_id);
-    //         echo "✅ Payment created for booking: $booking_id\n\n";
-    //         return;
-    //     }
-
-
-    // echo "\nDEBUG: booking_id from form: ";
-    // var_dump($booking_id['id']);
-
-    // echo "\nDEBUG: Bookings fetched:\n\n";
-    // print_r($bookings);
-
-
-
-    // }
-
-    // echo "❌ Booking ID not found or invalid.\n\n";
+    echo "❌ Booking ID not found or invalid.\n\n";
 }
 
-
-
-
-
-
-
-
-
-
+// === RUN ===
 $pdo = connectToDatabase($databases);
 $user_id = getUser();
 payBooking($pdo, $user_id);
