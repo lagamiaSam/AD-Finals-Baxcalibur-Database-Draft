@@ -19,4 +19,21 @@ class Payment
       ':amount' => $booking_amount
     ]);
   }
+
+  public static function updateBooking(PDO $pdo, string $booking_id): void
+  {
+    $stmt = $pdo->prepare("
+        UPDATE public.\"bookings\"
+        SET
+            payment_status = :payment_status,
+            booking_status = :booking_status
+        WHERE id = :id
+    ");
+
+    $stmt->execute([
+      ':payment_status' => 'Paid',
+      ':booking_status' => 'Confirmed',
+      ':id' => $booking_id
+    ]);
+  }
 }

@@ -93,9 +93,12 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
                 <p><span class="label">Date:</span> <?= htmlspecialchars($booking['booking_date']) ?></p>
                 <p><span class="label">Booking Status:</span> <?= htmlspecialchars($booking['booking_status']) ?></p>
                 <p><span class="label">Payment Status:</span> <?= htmlspecialchars($booking['payment_status']) ?></p>
+                <span class="label">Amount:</span> <?= $booking['price'] ?></p>
                 <button class="remove-booking">
                   <span class="material-icons">close</span>
                 </button>
+
+                <?php if ($booking['payment_status'] !== "Paid"): ?>
                 <form class="payment-form" action="/handlers/payment.handler.php" method="POST">
                   <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['id']) ?>" />
                   <input type="hidden" name="amount" value="<?= $booking['price'] ?>" />
@@ -103,6 +106,7 @@ $bookings = UserPage::fetchUserBookings($pdo, $user['id']);
                   <span class="material-icons">payments</span>Pay Now
                 </button>
                 </form>
+                <?php endif; ?>
               </div>
             <?php endforeach; ?>
           <?php else: ?>

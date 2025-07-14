@@ -47,6 +47,7 @@ function payBooking($pdo, string $user_id)
 
     if ($user_booking_id == $booking_id) {
             Payment::createPayment($pdo, $booking_id, $booking_amount);
+            Payment::updateBooking($pdo, $booking_id);
             echo "✅ Payment created for booking: $booking_id\n\n";
             return;
         }
