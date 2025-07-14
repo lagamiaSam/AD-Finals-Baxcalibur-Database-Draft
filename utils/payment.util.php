@@ -32,7 +32,7 @@ class Payment
 
     $stmt->execute([
       ':payment_status' => 'Paid',
-      ':booking_status' => 'Confirmed',
+      ':booking_status' => 'Booked',
       ':id' => $booking_id
     ]);
   }
