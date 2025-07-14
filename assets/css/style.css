@@ -650,5 +650,49 @@ nav li:has(#signUpBtnLink) {
   .footer-socials {
     width: 100%;
   }
+  /* Navbar responsive */
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 3.5rem;
+    right: 0;
+    width: 100%;
+    background-color: black;
+    padding: 1rem 0;
+    z-index: 999;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links li {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin: 0;
+  }
+
+  .navbar-links a {
+    padding: 1rem;
+  }
+
+  .toggle-menu {
+    display: block;
+  }
+
+  nav li:has(#loginBtnLink),
+  nav li:has(#signUpBtnLink) {
+    width: 100%;
+    margin: 0;
+  }
+
+  #loginBtnLink,
+  #signUpBtnLink {
+    width: 90%;
+    margin: 0.5rem auto;
+    border-radius: 0;
+  }
 }
 
