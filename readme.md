@@ -83,11 +83,8 @@ Description of the project in details.
 
 #### Framework/Library
 <!-- TODO: Ask Sir About CodeIgniter -->
-![CodeIgniter](https://img.shields.io/badge/CodeIgniter-EF4223?style=for-the-badge&logo=codeigniter&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 #### Databases
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 
 #### Deployment
@@ -158,7 +155,7 @@ AD-ProjectName
 
 | Title        | Purpose                                                                       | Link          |
 | ------------ | ----------------------------------------------------------------------------- | ------------- |
-| Sample Title | Sample purpose would be here like this and this is the example of what it is. | trykolang.com |
-| Sample Title | Sample purpose would be here like this and this is the example of what it is. | trykolang.com |
-| Sample Title | Sample purpose would be here like this and this is the example of what it is. | trykolang.com |
-| Sample Title | Sample purpose would be here like this and this is the example of what it is. | trykolang.com |
+| Chatgpt | helps developers write, debug, and understand code quickly and efficiently.| https://chatgpt.com/ |
+| w3schools | web developer's site that provides free tutorials and references for learning web technologies like HTML, CSS, JavaScript, and more. | https://www.w3schools.com/ |
+| Freepik |  provides free and premium graphic resources like images, vectors, icons, and templates for designers and content creators. | https://www.freepik.com/ |
+
