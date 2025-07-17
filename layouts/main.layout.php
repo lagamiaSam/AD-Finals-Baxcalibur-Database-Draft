@@ -17,11 +17,11 @@ Auth::init();
 
 $user = Auth::user();
 
-function renderMainLayout(callable $content): void
-{
-    // global $headNavList, $user; // external variables
-    // head($title, $customJsCss['css'] ?? []);
-    // navHeader($headNavList, $user);
-    $content();
-    // footer($customJsCss['js'] ?? []);
-}
+// function renderMainLayout(callable $content): void
+// {
+//     // global $headNavList, $user; // external variables
+//     // head($title, $customJsCss['css'] ?? []);
+//     // navHeader($headNavList, $user);
+//     $content();
+//     // footer($customJsCss['js'] ?? []);
+// }

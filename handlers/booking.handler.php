@@ -23,7 +23,7 @@ function connectToDatabase(array $config): PDO
         $pdo = new PDO($dsn, $config['pgUser'], $config['pgPassword'], [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]);
-        echo "✅ Connected to database.\n\n";
+        // echo "✅ Connected to database.\n\n";
         return $pdo;
     } catch (PDOException $e) {
         die("❌ Connection failed: " . $e->getMessage() . "\n\n");
@@ -38,21 +38,19 @@ function bookTrip($pdo, $user_id)
     if ($trip_id === '1' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
-        header('Location: /pages/userDashboardPage/index.php');
     }
 
     if ($trip_id === '2' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
-        header('Location: /userDashboardPage/index.php');
     }
 
     if ($trip_id === '3' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         Booking::createBooking($pdo, $user_id, $trip_id);
-        header('Location: /pages/userDashboardPage/index.php');
 
     }
+    header('Location: /pages/userDashboard/index.php');
 }
 
 $pdo = connectToDatabase($databases);

@@ -24,7 +24,7 @@ function connectToDatabase(array $config): PDO
         $pdo = new PDO($dsn, $config['pgUser'], $config['pgPassword'], [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]);
-        echo "✅ Connected to database.\n\n";
+        // echo "✅ Connected to database.\n\n";
         return $pdo;
     } catch (PDOException $e) {
         die("❌ Connection failed: " . $e->getMessage() . "\n\n");
@@ -39,8 +39,8 @@ function cancelUserBooking(PDO $pdo, string $user_id)
     foreach ($bookings as $booking) {
         if ($booking['id'] === $user_booking_id) {
             Cancel::cancelBooking($pdo, $user_booking_id);
-            echo "✅ Booking cancelled: $user_booking_id\n\n";
-            header("Location: /pages/userDashboardPage/index.php?message=Booking%20cancelled%20successfully");
+            // echo "✅ Booking cancelled: $user_booking_id\n\n";
+            header("Location: /pages/userDashboard/index.php?message=Booking%20cancelled%20successfully");
             exit;
         }
     }

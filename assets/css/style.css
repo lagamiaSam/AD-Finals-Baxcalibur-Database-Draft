@@ -1,14 +1,41 @@
-/* ========== RESET & BASE ========== */
+/* Base Reset */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: black;
-  color: white;
   font-family: "Orbitron", sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1em;
+  max-width: 60ch;
 }
 
 /* ========== NAVBAR ========== */
@@ -23,7 +50,7 @@ nav {
   top: 0;
   z-index: 1000;
   width: 100%;
-  background-color: black;
+  background-color: black
 }
 
 .navbar-brand {
@@ -321,7 +348,6 @@ nav li:has(#signUpBtnLink) {
   }
 }
 
-
 /* Responsive */
 @media (max-width: 768px) {
   .footer-container {
@@ -443,7 +469,12 @@ nav li:has(#signUpBtnLink) {
 }
 
 .explore-zonescape-span2 {
-  background: linear-gradient(90deg, rgba(113, 9, 147, 1) 0%, rgba(100, 8, 130, 1) 62%, rgba(154, 115, 167, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(113, 9, 147, 1) 0%,
+    rgba(100, 8, 130, 1) 62%,
+    rgba(154, 115, 167, 1) 100%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -463,15 +494,18 @@ nav li:has(#signUpBtnLink) {
 }
 
 .first-rectangle {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/img/1st-rectangle-bg.png);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(/assets/img/1st-rectangle-bg.png);
 }
 
 .second-rectangle {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/img/2nd-rectangle-bg.png);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(/assets/img/2nd-rectangle-bg.png);
 }
 
 .third-rectangle {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/img/3rd-rectangle-bg.png);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(/assets/img/3rd-rectangle-bg.png);
 }
 
 /* Shared Rectangle Layout */
@@ -575,7 +609,7 @@ nav li:has(#signUpBtnLink) {
   background-color: #0d0d0d;
   padding: 40px 20px;
   color: #fff;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   border-top: 2px solid #c25de4;
 }
 
@@ -696,3 +730,27 @@ nav li:has(#signUpBtnLink) {
   }
 }
 
+.logout-btn {
+  color: white;
+  font-weight: bold;
+  background-color: black;
+  margin-top: 0.5rem;
+    border: 2px solid white;
+  border-radius: 20px;
+  width: 8rem;
+  padding: 0.25rem 1.5rem;
+  text-align: center;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  transform: scale(1.1);
+  background-color: white;
+  color: black;
+}
+
+.logout-btn:active {
+  transform: scale(0.9);
+}
